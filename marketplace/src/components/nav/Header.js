@@ -14,7 +14,7 @@ import firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Search from "../forms/Search";
-import Logo from "../../images/logo.png"
+import Logo from "../../images/logo.png";
 
 const { SubMenu, Item } = Menu;
 
@@ -23,7 +23,6 @@ const Header = () => {
 
   let dispatch = useDispatch();
   let { user, cart } = useSelector((state) => ({ ...state }));
-
   let history = useHistory();
 
   const handleClick = (e) => {
@@ -41,11 +40,10 @@ const Header = () => {
   };
 
   return (
-
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
       <Item>
-            <img src={Logo} className="img-fluid"></img>
-      <Link to="/">Inicio</Link>
+        <img src={Logo} className="img-fluid"></img>
+        <Link to="/">Inicio</Link>
       </Item>
 
       <Item key="shop" icon={<ShoppingOutlined />}>
@@ -87,6 +85,11 @@ const Header = () => {
           {user && user.role === "admin" && (
             <Item>
               <Link to="/admin/dashboard">Dashboard</Link>
+            </Item>
+          )}
+          {user && user.role === "brand" && (
+            <Item>
+              <Link to="/brand/dashboard">Dashboard</Link>
             </Item>
           )}
 

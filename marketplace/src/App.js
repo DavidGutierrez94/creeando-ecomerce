@@ -3,7 +3,6 @@ import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Home from "./pages/Home";
@@ -38,7 +37,9 @@ import Landing from "./pages/Landing";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { currentUser } from "./functions/auth";
-
+/* Brand imports */
+import { BrandDashboard } from "./pages/brand/brand-dashboard";
+import { ProductCreateBrand } from "./pages/brand/product/ProductCreateBrand";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -80,7 +81,11 @@ const App = () => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/complete" component={RegisterComplete} />
-        <Route exact path="/register/brand/complete" component={RegisterBrandComplete} />
+        <Route
+          exact
+          path="/register/brand/complete"
+          component={RegisterBrandComplete}
+        />
         <Route exact path="/forgot/password" component={ForgotPassword} />
         <UserRoute exact path="/user/history" component={History} />
         <UserRoute exact path="/user/password" component={Password} />
@@ -110,6 +115,9 @@ const App = () => {
         <AdminRoute exact path="/admin/coupon" component={CreateCouponPage} />
         <UserRoute exact path="/payment" component={Payment} />
         <Route exact path="/landing" component={Landing} />
+        {/* Brand routes */}
+        <Route exact path="/brand/dashboard" component={BrandDashboard} />
+        <Route exact path="/brand/product/" component={ProductCreateBrand} />
       </Switch>
     </>
   );

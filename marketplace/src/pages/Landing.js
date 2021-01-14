@@ -12,13 +12,14 @@ const Landing = () => {
 
                 <Col lg={24} md={24} sm={24} xs={24}>
                     <img src={Biglogo} style={size}></img>
-                    <h1 className="align-center" style={upper}>Bienvenido al Marketplace de Creeando</h1>
+                    <h1 className="align-center" style={upper}>Bienvenid@ al Marketplace de Creeando</h1>
                     <Link to="/">
                         <Button type="primary" primary >
                             ir a la web
                         </Button>
                     </Link>
-                    <Button type="danger" danger>
+
+                    <Button type="primary" danger>
                         mundo virtual
                     </Button>
 

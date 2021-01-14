@@ -388,7 +388,7 @@ const Shop = () => {
               key="5"
               title={
                 <span className="h6">
-                  <DownSquareOutlined /> Marcas
+                  <DownSquareOutlined />Tallas
                 </span>
               }
             >

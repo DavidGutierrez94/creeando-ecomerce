@@ -187,7 +187,7 @@ const Checkout = ({ history }) => {
 
         {totalAfterDiscount > 0 && (
           <p className="bg-success p-2">
-            Descuento Total: <NumberFormat value={totalAfterDiscount}  displayType="text" thousandSeparator="." decimalSeparator="," prefix="$"/>
+            Descuento: <NumberFormat value={total-totalAfterDiscount}  displayType="text" thousandSeparator="." decimalSeparator="," prefix="$"/>
           </p>
         )}
 

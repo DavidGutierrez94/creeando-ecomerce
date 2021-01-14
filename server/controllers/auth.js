@@ -36,39 +36,48 @@ exports.createOrUpdateBrand = async (req, res) => {
     address,
     logo,
     token,
-  } = req.brand;
+  } = req.body;
+  const searchUser= {
+    name: email.split("@")[0]
+  }
 
 
   const user = await User.findOneAndUpdate(
     { email },
-    { name: email.split("@")[0], picture },
+    searchUser,
     { new: true }
   );
+  let newUser= user;
   if (user) {
     console.log("USER UPDATED", user);
-    res.json(user);
   } else {
-    const newUser = await new User({
+    newUser = await new User({
       email,
       name: email.split("@")[0],
       logo,
-      role,
+      role: 'brand',
     }).save();
     console.log("USER CREATED", newUser);
-    res.json(newUser);
   }
-
+  const searchBrand = {
+    name: brandName
+  }
+  if(logo){
+    searchBrand.logo = logo
+  }
   const brand = await Brand.findOneAndUpdate(
     { email },
-    { name: brandName, logo },
+    searchBrand,
     { new: true }
   );
+  let newBrand = brand;
   if (brand) {
     console.log("BRAND UPDATED", Brand);
     res.json(Brand);
   } else {
-    const newBrand = await new Brand({
+    newBrand = await new Brand({
       repName,
+      idUser: newUser._id,
       email,
       repId,
       phone,

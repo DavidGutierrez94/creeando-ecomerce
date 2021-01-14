@@ -11,10 +11,10 @@ export const createOrUpdateUser = async (authtoken) => {
     }
   );
 };
-export const createOrUpdateBrand = async (authtoken) => {
+export const createOrUpdateBrand = async (authtoken, values) => {
   return await axios.post(
     `${process.env.REACT_APP_API}/create-or-update-brand`,
-    {},
+    values,
     {
       headers: {
         authtoken,

@@ -8,20 +8,19 @@ import LogoUpload from "../../components/forms/LogoUpload";
 
 const RegisterBrandComplete = ({ history }) => {
   const initialState = {
-    repName:" ",
-    email:" ",
+    repName:"daniel",
+   email:"kebipa3139@izzum.com",
     categories:[],
     subs:[],
-    repId:"",
-    phone:"",
-    brandName: " ",
-    description:" ",
-    address:" ",
+    repId:"1144096123",
+    phone:"3104477054",
+    brandName: "tesla",
+    description:"tesla motors",
+    address:"tesla 12 # 3-21",
     logo:[],
-    token:" ",
+    token:"nWbsvnP9ZXq3qvaUqrsc",
   };
   const [values, setValues] = useState(initialState);
-
 
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
@@ -32,6 +31,7 @@ const RegisterBrandComplete = ({ history }) => {
   let dispatch = useDispatch();
 
   const handleChange = (e) => {
+    console.log(e.target.name, e.target.value, e.target)
     setValues({...values, [e.target.name]: e.target.value });
   //console.log(e.target.name, " ----- ", e.target.value);
   };
@@ -57,14 +57,13 @@ const RegisterBrandComplete = ({ history }) => {
     }
 
     try {
-     
+      
       const result = await auth.createUserWithEmailAndPassword(
         values.email,
         password
       );
 
        console.log("RESULT", result);
-      if (result.user.emailVerified) {
         // remove user email fom local storage
         window.localStorage.removeItem("emailForRegistration");
         // get user id token
@@ -72,44 +71,45 @@ const RegisterBrandComplete = ({ history }) => {
         
         const idTokenResult = await user.getIdTokenResult();
         // redux store
-        console.log("user", user, "idTokenResult", idTokenResult);
+        console.log("user", user, "idTokenResult", idTokenResult, values);
 
-        createOrUpdateUser(idTokenResult.token)
-          .then((res) => {
-            dispatch({
-              type: "LOGGED_IN_USER",
-              payload: {
-                name: res.data.name,
-                email: res.data.email,
-                token: idTokenResult.token,
-                role: res.data.role,
-                _id: res.data._id,
-              },
-            });
-          })
-          .catch((err) => console.log(err));
+        // createOrUpdateUser(idTokenResult.token)
+        //   .then((res) => {
+        //     console.log(res, 'user')
+            // dispatch({
+            //   type: "LOGGED_IN_USER",
+            //   payload: {
+            //     name: res.data.name,
+            //     email: res.data.email,
+            //     token: idTokenResult.token,
+            //     role: res.data.role,
+            //     _id: res.data._id,
+            //   },
+            // });
+          // })
+          // .catch((err) => console.log(err));
         
-          createOrUpdateBrand(idTokenResult.token)
-          .then(() => {
-            dispatch({
-              type: "LOGGED_IN_BRAND",
-              payload: {
-              values,
-              },
-            });
+          createOrUpdateBrand(idTokenResult.token, values)
+          .then((res) => {
+            console.log(res, 'brand')
+            // dispatch({
+            //   type: "LOGGED_IN_BRAND",
+            //   payload: {
+            //   values,
+            //   },
+            // });
           })
-          .catch((err) => console.log(err));
+          .catch((err) => console.log(err, 'custom-error'));
 
 
         // redirect
         history.push("/");
-      }
+      
     } catch (error) {
       console.log(error);
       toast.error(error.message);
     }
   };
-
 
 return (
   <div className="container p-2">

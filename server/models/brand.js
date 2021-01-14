@@ -12,6 +12,10 @@ const brandSchema = new mongoose.Schema(
       required: true,
       index: true,
     },
+    idUser:{
+      type: ObjectId,
+      ref: "User",
+    },
     categories: [
       {
       type: ObjectId,

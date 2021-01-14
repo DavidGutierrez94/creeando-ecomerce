@@ -32,6 +32,10 @@ const productSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "Category",
     },
+    brand: {
+      type: ObjectId,
+      ref: "Brand",
+    },
     subs: [
       {
         type: ObjectId,

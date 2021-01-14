@@ -42,6 +42,7 @@ exports.brandCheck = async (req, res, next) => {
       err: "Brand resource. Access denied.",
     });
   } else {
+    req.user.brandId = brandUser.brandId;
     next();
   }
 };

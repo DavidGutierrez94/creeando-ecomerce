@@ -2,6 +2,24 @@ const Product = require("../models/product");
 const User = require("../models/user");
 const slugify = require("slugify");
 
+exports.createProductBrand = async (req, res) => {
+  try {
+    const {body, user} = req
+    const newBodyData = body;
+    newBodyData.slug = slugify(body.title);
+    if(user.brandId){
+      newBodyData.brandId = user.brandId
+    }
+    const newProduct = await new Product(newBodyData).save();
+    res.json(newProduct);
+  } catch (err) {
+    console.log(err);
+    // res.status(400).send("Create product failed");
+    res.status(400).json({
+      err: err.message,
+    });
+  }
+};
 exports.create = async (req, res) => {
   try {
     console.log(req.body);

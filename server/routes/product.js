@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 // middlewares
-const { authCheck, adminCheck } = require("../middlewares/auth");
+const { authCheck, adminCheck, brandCheck } = require("../middlewares/auth");
 
 // controller
 const {
@@ -16,10 +16,12 @@ const {
   productStar,
   listRelated,
   searchFilters,
+  createProductBrand,
 } = require("../controllers/product");
 
 // routes
 router.post("/product", authCheck, adminCheck, create);
+router.post("/product-brand", authCheck, brandCheck, createProductBrand);
 router.get("/products/total", productsCount);
 
 router.get("/products/:count", listAll); // products/100

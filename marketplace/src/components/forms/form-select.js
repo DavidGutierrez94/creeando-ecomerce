@@ -1,10 +1,10 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
 
-export const FormSelect = ({ formName, label, list }) => (
+export const FormSelect = ({ formName, label, list, disabled=false }) => (
   <div className="form-group">
     <label htmlFor={formName}>{label}</label>
-    <Field as="select" name={formName} id={formName} className="form-control">
+    <Field as="select" name={formName} id={formName} disabled={disabled} className="form-control">
       <option defaultValue>Seleccionar...</option>
       {list &&
         list.map((item, index) => (

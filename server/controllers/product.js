@@ -7,13 +7,14 @@ exports.createProductBrand = async (req, res) => {
     const {body, user} = req
     const newBodyData = body;
     newBodyData.slug = slugify(body.title);
+    if(body.picture) {
+      newBodyData.images = [body.picture];
+    }
     if(user.brandId){
       newBodyData.brandId = user.brandId
     }
     const newProduct = await new Product(newBodyData).save();
-    res.json(newProduct);
   } catch (err) {
-    console.log(err);
     // res.status(400).send("Create product failed");
     res.status(400).json({
       err: err.message,
@@ -22,7 +23,6 @@ exports.createProductBrand = async (req, res) => {
 };
 exports.create = async (req, res) => {
   try {
-    console.log(req.body);
     req.body.slug = slugify(req.body.title);
     const newProduct = await new Product(req.body).save();
     res.json(newProduct);

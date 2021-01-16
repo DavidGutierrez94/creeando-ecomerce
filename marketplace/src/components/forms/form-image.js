@@ -1,12 +1,25 @@
 import React, { useState } from "react";
 import { ErrorMessage } from "formik";
+import { useSelector } from "react-redux";
+import { Avatar } from "antd";
+import axios from "axios";
+import { removeImageBack, resizeImageAndUpload } from "../../helpers/upload-image";
 
 export const FormImage = ({ setField, formName, label }) => {
   const [picture, setPicture] = useState();
+  const { user } = useSelector((state) => ({ ...state }));
 
-  const handlePic = (mode) => {
-    setPicture(mode);
-    setField(formName, mode);
+  const callbackHandle = (imageData) => {
+    setPicture(imageData)
+    setField(formName, imageData);
+  }
+  const handlePic = async (mode) => {
+    await resizeImageAndUpload(mode, callbackHandle, user && user.token)
+    
+  };
+  const handleRemovePic = async () => {
+    await removeImageBack(picture.url, callbackHandle, user && user.token)
+
   };
   return (
     <div className="form-group">
@@ -16,13 +29,16 @@ export const FormImage = ({ setField, formName, label }) => {
             type="button"
             className="close"
             aria-label="Close"
-            onClick={() => handlePic(null)}
+            onClick={handleRemovePic}
           >
             <span aria-hidden="true">&times;</span>
           </button>
-          <img
-            src={URL.createObjectURL(picture)}
-            className="img-thumbnail"
+          <Avatar
+            src={picture.url}
+            // className="img-thumbnail"
+            size={100}
+                shape="square"
+                className="ml-3"
             style={{ maxHeight: "400px" }}
           />
         </div>

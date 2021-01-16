@@ -40,6 +40,8 @@ import { currentUser } from "./functions/auth";
 /* Brand imports */
 import { BrandDashboard } from "./pages/brand/brand-dashboard";
 import { ProductCreateBrand } from "./pages/brand/product/ProductCreateBrand";
+import { CalculateDelivery } from "./pages/brand/calculate-delivery/CalculateDelivery";
+import { BrandRoute } from "./components/routes/BrandRoute";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -116,8 +118,9 @@ const App = () => {
         <UserRoute exact path="/payment" component={Payment} />
         <Route exact path="/landing" component={Landing} />
         {/* Brand routes */}
-        <Route exact path="/brand/dashboard" component={BrandDashboard} />
-        <Route exact path="/brand/product/" component={ProductCreateBrand} />
+        <BrandRoute exact path="/brand/dashboard" component={BrandDashboard} />
+        <BrandRoute exact path="/brand/calculate-delivery" component={CalculateDelivery} />
+        <BrandRoute exact path="/brand/product" component={ProductCreateBrand} />
       </Switch>
     </>
   );

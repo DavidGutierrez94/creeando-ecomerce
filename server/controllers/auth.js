@@ -90,7 +90,7 @@ exports.createOrUpdateBrand = async (req, res) => {
     console.log("BRAND CREATED", newBrand);
     res.json(newBrand);
   }
-  await newUser.update({brandId: newBrand._id});
+  await newUser.updateOne({brandId: newBrand._id});
 };
 exports.currentUser = async (req, res) => {
   User.findOne({ email: req.user.email }).exec((err, user) => {

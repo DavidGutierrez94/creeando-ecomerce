@@ -11,6 +11,20 @@ export const BrandNav = () => {
         <li className="nav-item">
             <Link to="/brand/product/"  className="nav-link">Crear Producto</Link>
         </li>
+        <li className="nav-item">
+            <Link to="/brand/calculate-delivery"  className="nav-link">Calcular Envio</Link>
+        </li>
+        <li className="nav-item" aria-disabled>
+        <Link className="nav-link">
+          Contraseña
+        </Link>
+      </li>
+
+      <li className="nav-item" disabled>
+        <Link  className="nav-link">
+          Lista de deseos
+        </Link>
+      </li>
       </ul>
     </nav>
   );

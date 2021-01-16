@@ -46,3 +46,14 @@ export const currentAdmin = async (authtoken) => {
     }
   );
 };
+export const currentBrand = async (authtoken) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/current-brand`,
+    {},
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};

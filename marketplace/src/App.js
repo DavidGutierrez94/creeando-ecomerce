@@ -37,6 +37,7 @@ import Landing from "./pages/Landing";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { currentUser } from "./functions/auth";
+import MundoVirtual from './pages/MundoVirtual';
 /* Brand imports */
 import { BrandDashboard } from "./pages/brand/brand-dashboard";
 import { ProductCreateBrand } from "./pages/brand/product/ProductCreateBrand";

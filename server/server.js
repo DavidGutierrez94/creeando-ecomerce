@@ -39,6 +39,6 @@ app.use("/api",require("./routes/"+r))
 //port
 const port = process.env.PORT || 8000;
 
-app.listen(port,()=>console.log(`Server is running on oprt ${port}`));
+app.listen(port,()=>console.log(`Server is running on Port ${port}`));
 
 

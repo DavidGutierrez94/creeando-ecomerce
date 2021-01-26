@@ -9,9 +9,18 @@ import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
 import { Menu, Slider, Checkbox, Radio } from "antd";
 import {
+  BgColorsOutlined,
+  ColumnWidthOutlined,
+  DollarCircleTwoTone,
   DollarOutlined,
   DownSquareOutlined,
+  EnvironmentFilled,
+  EnvironmentOutlined,
+  EnvironmentTwoTone,
+  FunnelPlotOutlined,
+  OrderedListOutlined,
   StarOutlined,
+  StarTwoTone,
 } from "@ant-design/icons";
 import Star from "../components/forms/Star";
 
@@ -321,7 +330,7 @@ const Shop = () => {
           <hr />
 
           <Menu
-            defaultOpenKeys={["1", "2", "3", "4", "5", "6", "7"]}
+            defaultOpenKeys={[]}
             mode="inline"
           >
             {/* price */}
@@ -329,7 +338,7 @@ const Shop = () => {
               key="1"
               title={
                 <span className="h6">
-                  <DollarOutlined /> Precio
+                  <DollarCircleTwoTone twoToneColor="#56CFE1"/> Precio
                 </span>
               }
             >
@@ -340,7 +349,7 @@ const Shop = () => {
                   range
                   value={price}
                   onChange={handleSlider}
-                  max="4999"
+                  max="2999999"
                 />
               </div>
             </SubMenu>
@@ -350,7 +359,7 @@ const Shop = () => {
               key="2"
               title={
                 <span className="h6">
-                  <DownSquareOutlined /> Categorías
+                  <OrderedListOutlined style={{color:"#5390d9"}}/> Categorías
                 </span>
               }
             >
@@ -362,7 +371,7 @@ const Shop = () => {
               key="3"
               title={
                 <span className="h6">
-                  <StarOutlined /> Rating
+                  <StarTwoTone twoToneColor="#FFF500"/> Rating
                 </span>
               }
             >
@@ -374,7 +383,7 @@ const Shop = () => {
               key="4"
               title={
                 <span className="h6">
-                  <DownSquareOutlined /> Sub Categorías
+                  <FunnelPlotOutlined style={{color:"#7400b8"}}/> Sub Categorías
                 </span>
               }
             >
@@ -388,7 +397,7 @@ const Shop = () => {
               key="5"
               title={
                 <span className="h6">
-                  <DownSquareOutlined />Tallas
+                  <ColumnWidthOutlined style={{color:"#56cfe1"}}/>Tallas
                 </span>
               }
             >
@@ -402,7 +411,7 @@ const Shop = () => {
               key="6"
               title={
                 <span className="h6">
-                  <DownSquareOutlined /> Colores
+                  <BgColorsOutlined style={{color:"#5390d9"}}/> Colores
                 </span>
               }
             >
@@ -416,7 +425,7 @@ const Shop = () => {
               key="7"
               title={
                 <span className="h6">
-                  <DownSquareOutlined /> Envío
+                  <EnvironmentTwoTone twoToneColor="#72EFDD"/> Envío
                 </span>
               }
             >
@@ -431,7 +440,7 @@ const Shop = () => {
           {loading ? (
             <h4 className="text-danger">Loading...</h4>
           ) : (
-            <h4 className="text-danger">Productos</h4>
+            <h2 className="text-danger">Productos</h2>
           )}
 
           {products.length < 1 && <p>No se encontraron productos</p>}

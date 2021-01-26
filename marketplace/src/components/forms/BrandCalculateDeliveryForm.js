@@ -10,10 +10,10 @@ import { useSelector } from "react-redux";
 import { calculateDeliveryBrand } from "../../functions/calculate";
 
 const cities = [
-  { value: 1, text: "Bogota", }];
+  { value: 1, text: "Bogotá D.C.", }];
 
-const roundtripe = [
-  { value: 0, text: "ida" },
+const roundtrip = [
+  { value: 0, text: "solo ida" },
 { value: 1, text: "ida y vuelta" }]
 
 
@@ -21,7 +21,7 @@ export const BrandCalculateDeliveryForm = () => {
   const { user } = useSelector((state) => ({ ...state }));
 
   const initialVal = {
-    price: undefined,
+    price: 0,
     city: 1,
     coordinates: [],
     addressInitial: "Cra 7 #120-20",
@@ -83,12 +83,12 @@ export const BrandCalculateDeliveryForm = () => {
             formName="roundtrip"
             label="Tipo de viaje"
             disabled
-            list={roundtripe}
+            list={roundtrip}
           />
           <FormInput formType="text" formName="addressInitial" label="Direccion 1" />
           <FormInput formType="text" formName="addressFinish" label="Direccion 2" />
 
-          <button type="submit" className="btn btn-outline-info">Guardar</button>
+          <button type="submit" className="btn btn-outline-info">Calcular</button>
         </Form>
       )}
     </Formik>

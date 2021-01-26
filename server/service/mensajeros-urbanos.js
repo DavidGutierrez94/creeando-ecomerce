@@ -3,8 +3,8 @@ const request = require("request");
 exports.generateTokenMU = () => new Promise((resolve, reject) => {
   const headers = {
     "Content-Type": "application/x-www-form-urlencoded",
-    client_id: process.env.ClientIdMU,
-    client_secret: process.env.ClientSecretMU,
+    client_id: process.env.CLIENT_ID_MU,
+    client_secret: process.env.CLIENT_SECRET_MU,
   };
   const options = { 
     method: 'POST',
@@ -33,7 +33,7 @@ exports.calculateMU = (token, dataFront)  => new Promise((resolve, reject) => {
         access_token: token,
       }; 
     const body = {
-        "id_user": process.env.UserIdMU,
+        "id_user": process.env.USER_ID_MU,
         "type_service": 4,
         "roundtrip": roundtrip || 0, //Ida y vuelta 1=si; 0:No
         "city":city || 1,//1->Bogotá 2->Cali 3->Medellín 4->Barranquilla 5-Villavicencio

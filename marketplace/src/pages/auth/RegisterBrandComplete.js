@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { createOrUpdateUser,createOrUpdateBrand } from "../../functions/auth";
+import { createOrUpdateBrand } from "../../functions/auth";
 import BrandCreateForm from '../../components/forms/BrandCreateForm';
 import LogoUpload from "../../components/forms/LogoUpload";
 
@@ -103,7 +103,7 @@ const RegisterBrandComplete = ({ history }) => {
 
 
         // redirect
-        history.push("/");
+        history.push("/login");
       
     } catch (error) {
       console.log(error);

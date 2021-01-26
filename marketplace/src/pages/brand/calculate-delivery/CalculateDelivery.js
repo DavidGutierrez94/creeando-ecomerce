@@ -1,6 +1,7 @@
 import React from "react";
 import { BrandNav } from "../../../components/nav/brand-nav";
 import { BrandCalculateDeliveryForm } from "../../../components/forms/BrandCalculateDeliveryForm";
+
 export const CalculateDelivery = () => {
   return (
     <div className="container-fluid">
@@ -11,11 +12,6 @@ export const CalculateDelivery = () => {
         <div className="col-md-10">
           <h4>Calcular Envio</h4>
           <div className="p-3">
-            {/*  <FileUpload
-              values={values}
-              setValues={setValues}
-              setLoading={setLoading}
-            /> */}
           </div>
           <div className="container-fluid">
             <BrandCalculateDeliveryForm/>

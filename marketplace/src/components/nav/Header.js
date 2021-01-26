@@ -41,22 +41,27 @@ const Header = () => {
 
   return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-      <Item>
+      <Item className="float-left">
         <img src={Logo} className="img-fluid"></img>
         <Link to="/">Inicio</Link>
       </Item>
 
-      <Item key="shop" icon={<ShoppingOutlined />}>
+      <Item key="shop" icon={<ShoppingOutlined />} className="float-left">
         <Link to="/shop">Comprar</Link>
       </Item>
 
-      <Item key="cart" icon={<ShoppingCartOutlined />}>
+      <Item key="cart" icon={<ShoppingCartOutlined />} className="float-left">
         <Link to="/cart">
           <Badge count={cart.length} offset={[9, 0]}>
             Carrito
           </Badge>
         </Link>
       </Item>
+      <span className="float-left pl-5 ml-5 mr-n5 pr-n5 p-1 " style={{ width: 500 }}>
+        <Search style={{ width: "100%" }}/>
+      </span>
+
+
 
       {!user && (
         <Item key="register" icon={<UserAddOutlined />} className="float-right">
@@ -99,9 +104,7 @@ const Header = () => {
         </SubMenu>
       )}
 
-      <span className="float-right p-1">
-        <Search />
-      </span>
+ 
     </Menu>
   );
 };

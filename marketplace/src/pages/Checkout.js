@@ -8,12 +8,31 @@ import {
   applyCoupon,
   createCashOrderForUser,
 } from "../functions/user";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import axios from 'axios';
 import NumberFormat from "react-number-format";
+import { add } from "lodash";
+
+
+
+const getBrand = async (id) =>
+await axios.get(`${process.env.REACT_APP_API}/brand/${id}`, {
+
+});
+
 
 const Checkout = ({ history }) => {
+  // const shippingInfo = {
+  //   price: total,
+  //   city: 1,
+  //   coordinates: [],
+  //   addressInitial: "Cra 7 #120-20",
+  //   addressFinish: "calle 19b#6b",
+  //   roundtrip: 0,
+  // };
+  const [loading,setLoading] = useState(false);
+  const[shipping,setShipping] =useState(0);
   const [products, setProducts] = useState([]);
+  const [brand,setBrand] = useState("");
   const [total, setTotal] = useState(0);
   const [address, setAddress] = useState("");
   const [addressSaved, setAddressSaved] = useState(false);
@@ -23,7 +42,7 @@ const Checkout = ({ history }) => {
   const [discountError, setDiscountError] = useState("");
 
   const dispatch = useDispatch();
-  const { user, COD } = useSelector((state) => ({ ...state }));
+  const { user, COD} = useSelector((state) => ({ ...state }));
   const couponTrueOrFalse = useSelector((state) => state.coupon);
 
   useEffect(() => {
@@ -33,7 +52,28 @@ const Checkout = ({ history }) => {
       setTotal(res.data.cartTotal);
     });
   }, []);
+  const distinct = (value, index, self) =>{
+    return self.indexOf(value)===index;
+  }
+const findBrands = () =>{
+  const brands = [];
+  products.map((p)=>{
+    brands.push(p.product.brandId)
+  });
+  const distinctBrands = brands.filter(distinct);
+  if ( distinctBrands.length > 1 ){
+    distinctBrands.map((b)=>{
+      console.log(b);
+      getBrand(b).then((res)=>{
+        console.log(" brand", JSON.stringify(res.data, null, 4));
+      })
+    })
+    
 
+
+  }
+
+}
   const emptyCart = () => {
     // remove from local storage
     if (typeof window !== "undefined") {
@@ -55,7 +95,24 @@ const Checkout = ({ history }) => {
   };
 
   const saveAddressToDb = () => {
-    // console.log(address);
+
+    findBrands();
+   
+    // // console.log(address);
+    // calculateDeliveryBrand(shippingInfo, user.token)
+    // .then((res) => {
+    //   const {data: dataEndpoint} = res;
+    //   console.log(dataEndpoint);
+    //   toast.success(dataEndpoint.data.total_service);
+
+    // //  window.location.reload();
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    //   if (err.response.status === 400) toast.error(err.response.data);
+    //   toast.error(err.response.data.err);
+    // });
+
     saveUserAddress(user.token, address).then((res) => {
       if (res.data.ok) {
         setAddressSaved(true);
@@ -92,9 +149,11 @@ const Checkout = ({ history }) => {
     <>
       <input 
       className="form-control" 
-      type="address"
+      type="text"
      
-        value={address.value} onChange={setAddress} />
+        value={address} onChange={(e) => {
+          setAddress(e.target.value);
+        }}/>
       <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>
         Guardar
       </button>
@@ -168,6 +227,10 @@ const Checkout = ({ history }) => {
         <br />
         <br />
         {showAddress()}
+        {address.length < 1?
+         <label className="text-danger">*agrega tu dirección para calcular el costo de envio.</label>
+         :<br />
+         }
         <hr />
         <h4>¿Tienes un Cúpon de Descuento?</h4>
         <br />
@@ -182,6 +245,7 @@ const Checkout = ({ history }) => {
         <p>Productos: {products.length}</p>
         <hr />
         {showProductSummary()}
+       
         <hr />
         <p>Total: <NumberFormat value={total}  displayType="text" thousandSeparator="." decimalSeparator="," prefix="$"/></p>
 
@@ -204,13 +268,14 @@ const Checkout = ({ history }) => {
             ) : (
               <button
                 className="btn btn-primary"
-                
+                disabled={!addressSaved || !products.length}
                 onClick={() => history.push("/payment")}
               >
                 Colocar Orden
               </button>
             )}
           </div>
+
 
         </div>
       </div>

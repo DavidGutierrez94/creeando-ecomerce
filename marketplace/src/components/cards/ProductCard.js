@@ -3,7 +3,6 @@ import { Card, Tooltip } from "antd";
 import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import laptop from "../../images/laptop.png";
 import { Link } from "react-router-dom";
-import { showAverage } from "../../functions/rating";
 import NumberFormat from "react-number-format";
 import _ from "lodash";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
-  const [tooltip, setTooltip] = useState("Click to add");
+  const [tooltip, setTooltip] = useState("Click para Añadir");
 
   // redux
   const { user, cart } = useSelector((state) => ({ ...state }));
@@ -37,7 +36,7 @@ const ProductCard = ({ product }) => {
       // console.log('unique', unique)
       localStorage.setItem("cart", JSON.stringify(unique));
       // show tooltip
-      setTooltip("Added");
+      setTooltip("Añadido");
 
       // add to reeux state
       dispatch({
@@ -53,40 +52,41 @@ const ProductCard = ({ product }) => {
   };
 
   // destructure
-  const { images, title, description, slug, price } = product;
+  const { images, title, slug, price } = product;
 
   return (
     <>
-      
-      {product && product.ratings && product.ratings.length > 0 ? (
-        showAverage(product)
-      ) : (
-        <div className="text-center pt-1 pb-3"> <br/></div>
-      )}
-
-      <Card
+    
+      <Card 
+        style={{borderRadius:"25px"}}
+        type={"inner"}
         cover={
           <img
             src={images && images.length ? images[0].url : laptop}
-            style={{ height: "150px", objectFit: "cover" }}
-            className="p-1"
+            style={{ height: "300px", objectFit: "cover" , borderRadius:"25px 25px 0px 0px"}}
+            
           />
         }
+        hoverable
+       
         actions={[
-          <Link to={`/product/${slug}`}>
+     
+          <Link to={`/product/${slug}`} style={{borderRadius:"25px"}}>
             <EyeOutlined className="text-warning" /> <br /> Ver Producto
           </Link>,
-          <Tooltip title={tooltip}>
+          <Tooltip title={tooltip} >
             <a onClick={handleAddToCart} disabled={product.quantity < 1}>
               <ShoppingCartOutlined className="text-danger" /> <br />
               {product.quantity < 1 ? "Producto Agotado" : "Añadir al carrito"}
             </a>
           </Tooltip>,
+          
         ]}
       >
         <Meta
           title={<>{title} <NumberFormat value={price} displayType="text" thousandSeparator="." decimalSeparator="," prefix="$"/></>}
-          description={`${description && description.substring(0, 40)}...`}
+          style={{height:"20px"}}
+  
         />
       </Card>
     </>

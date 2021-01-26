@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button } from "antd";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { StarOutlined } from "@ant-design/icons";
+import { StarOutlined, StarTwoTone } from "@ant-design/icons";
 import { useHistory, useParams } from "react-router-dom";
 
 const RatingModal = ({ children }) => {
@@ -26,7 +26,7 @@ const RatingModal = ({ children }) => {
   return (
     <>
       <div onClick={handleModal}>
-        <StarOutlined className="text-danger" /> <br />{" "}
+        <StarTwoTone twoToneColor="#FFF500"/> <br />{" "}
         {user ? "Calificar" : "Ingresar para calificar"}
       </div>
       <Modal

@@ -3,6 +3,8 @@ import { getProducts, getProductsCount } from "../../functions/product";
 import ProductCard from "../cards/ProductCard";
 import LoadingCard from "../cards/LoadingCard";
 import { Pagination } from "antd";
+import ItemsCarousel from 'react-items-carousel';
+
 
 const BestSellers = () => {
   const [products, setProducts] = useState([]);
@@ -13,6 +15,8 @@ const BestSellers = () => {
   useEffect(() => {
     loadAllProducts();
   }, [page]);
+  const [activeItemIndex, setActiveItemIndex] = useState(0);
+  const [mov, setMov] = useState(false);
 
   useEffect(() => {
     getProductsCount().then((res) => setProductsCount(res.data));
@@ -33,25 +37,32 @@ const BestSellers = () => {
         {loading ? (
           <LoadingCard count={3} />
         ) : (
-          <div className="row">
+          <ItemsCarousel
+          infiniteLoop={false}
+          gutter={12}
+          activePosition={'center'}
+          chevronWidth={60}
+          disableSwipe={false}
+          alwaysShowChevrons={false}
+          numberOfCards={mov}
+          slidesToScroll={mov}
+          outsideChevron={true}
+          showSlither={false}
+          firstAndLastGutter={false}
+          activeItemIndex={activeItemIndex}
+          requestToChangeActive={value => setActiveItemIndex(value)}
+          rightChevron={'>'}
+          leftChevron={'<'}
+       >
             {products.map((product) => (
-              <div key={product._id} className="col-md-4">
+              <div key={product._id}>
                 <ProductCard product={product} />
               </div>
             ))}
-          </div>
+          </ItemsCarousel>
         )}
       </div>
 
-      <div className="row">
-        <nav className="col-md-4 offset-md-4 text-center pt-5 p-3">
-          <Pagination
-            current={page}
-            total={(productsCount / 3) * 10}
-            onChange={(value) => setPage(value)}
-          />
-        </nav>
-      </div>
     </>
   );
 };

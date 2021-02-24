@@ -11,13 +11,13 @@ import {
 import axios from 'axios';
 import NumberFormat from "react-number-format";
 import { add } from "lodash";
+import { getBrandsByCount, getBrand } from "../functions/brands";
+import { calculateDeliveryBrand } from "../functions/calculate";
+import { setIn } from "formik";
+import { currentUser } from "../functions/auth";
 
 
 
-const getBrand = async (id) =>
-await axios.get(`${process.env.REACT_APP_API}/brand/${id}`, {
-
-});
 
 
 const Checkout = ({ history }) => {
@@ -33,8 +33,12 @@ const Checkout = ({ history }) => {
   const[shipping,setShipping] =useState(0);
   const [products, setProducts] = useState([]);
   const [brand,setBrand] = useState("");
+  const [brs,setBrs] = useState([]);
+
   const [total, setTotal] = useState(0);
   const [address, setAddress] = useState("");
+  const [ind, setInd] = useState("");
+
   const [addressSaved, setAddressSaved] = useState(false);
   const [coupon, setCoupon] = useState("");
   // discount price
@@ -46,34 +50,79 @@ const Checkout = ({ history }) => {
   const couponTrueOrFalse = useSelector((state) => state.coupon);
 
   useEffect(() => {
-    getUserCart(user.token).then((res) => {
+    let initFetch = async () =>{
+      await getUserCart(user.token).then((res) => {
       console.log("user cart res", JSON.stringify(res.data, null, 4));
       setProducts(res.data.products);
+      
       setTotal(res.data.cartTotal);
+      console.log(user)
+      currentUser(user.token).then((d)=>{
+
+          setAddress(d.data.address)
+setInd(d.data.ind)        
+      })
     });
+  }
+  initFetch()
+
+    
   }, []);
   const distinct = (value, index, self) =>{
     return self.indexOf(value)===index;
   }
-const findBrands = () =>{
-  const brands = [];
+
+const findBrands = async (addrss) =>{
+  const bt = [];
+  let ta =[]
+ 
+  
   products.map((p)=>{
-    brands.push(p.product.brandId)
+    if(!bt.includes(p.product.brandId)){
+    bt.push(p.product.brandId)
+    }
   });
-  const distinctBrands = brands.filter(distinct);
-  if ( distinctBrands.length > 1 ){
-    distinctBrands.map((b)=>{
-      console.log(b);
-      getBrand(b).then((res)=>{
-        console.log(" brand", JSON.stringify(res.data, null, 4));
+
+  await bt.map(async (item, i) => {
+    
+    await getBrand(item).then(async (d)=>{
+      let dataMU ={
+        "id_user": user._id,//ID de usuario
+      "type_service": 4, //Tipo de servicio
+      "roundtrip": 0, //Ida y vuelta 1=si; 0:No
+      "city":1,//1->Bogotá 2->Cali 3->Medellín 4->Barranquilla 5-Villavicencio
+      "coordinates": [
+           {
+              "type": "0",
+              "address": d.data.address,
+              "city":"bogota"
+          },
+          {
+            "type": "1",
+            "address": addrss,
+            "city":"bogota"
+        },
+      ]
+    }
+      await calculateDeliveryBrand(dataMU).then((mu)=>{
+        
+        ta.push({...d.data, MU:mu.data.data.total_service})
+        setTotal(total + mu.data.data.total_service)
       })
+    
     })
+  })
+  console.log(brs)
+  setBrs(ta)
+
+
+}
     
 
 
-  }
+  
 
-}
+
   const emptyCart = () => {
     // remove from local storage
     if (typeof window !== "undefined") {
@@ -94,9 +143,9 @@ const findBrands = () =>{
     });
   };
 
-  const saveAddressToDb = () => {
+  const saveAddressToDb = async () => {
 
-    findBrands();
+    findBrands(address);
    
     // // console.log(address);
     // calculateDeliveryBrand(shippingInfo, user.token)
@@ -113,12 +162,13 @@ const findBrands = () =>{
     //   toast.error(err.response.data.err);
     // });
 
-    saveUserAddress(user.token, address).then((res) => {
+    saveUserAddress(user.token, address, ind).then((res) => {
       if (res.data.ok) {
         setAddressSaved(true);
         toast.success("Address saved");
       }
     });
+    setAddressSaved(true)
   };
 
   const applyDiscountCoupon = () => {
@@ -143,6 +193,7 @@ const findBrands = () =>{
         });
       }
     });
+    
   };
 
   const showAddress = () => (
@@ -150,25 +201,33 @@ const findBrands = () =>{
       <input 
       className="form-control" 
       type="text"
-     
+      placeholder="Dirección"
         value={address} onChange={(e) => {
           setAddress(e.target.value);
         }}/>
+        <input 
+      className="form-control" 
+      type="text"
+        placeholder="Indicaciones. Ej... Apto, Casa"
+        value={ind} onChange={(e) => {
+          setInd(e.target.value);
+        }}/>
       <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>
-        Guardar
+        Aceptar
       </button>
     </>
   );
 
-  const showProductSummary = () =>
-    products.map((p, i) => (
+  const showProductSummary = () =>products.map((p, i) => (
       <div key={i}>
         <p>
           {p.product.title} ({p.color}) x {p.count} ={" "}
           <NumberFormat value={p.product.price * p.count} displayType="text" thousandSeparator="." decimalSeparator="," prefix="$"/>
         </p>
       </div>
-    ));
+    )) 
+  
+    
 
   const showApplyCoupon = () => (
     <>
@@ -186,6 +245,10 @@ const findBrands = () =>{
       </button>
     </>
   );
+
+  const showBrands = () => brs.map((item, i) => (
+    <><p key={i}>{item.brandName} = {item.MU}</p></>
+  ))
 
   const createCashOrder = () => {
     createCashOrderForUser(user.token, COD, couponTrueOrFalse).then((res) => {
@@ -231,7 +294,9 @@ const findBrands = () =>{
          <label className="text-danger">*agrega tu dirección para calcular el costo de envio.</label>
          :<br />
          }
+
         <hr />
+      
         <h4>¿Tienes un Cúpon de Descuento?</h4>
         <br />
         {showApplyCoupon()}
@@ -245,6 +310,11 @@ const findBrands = () =>{
         <p>Productos: {products.length}</p>
         <hr />
         {showProductSummary()}
+        <hr />
+  
+         
+        <h5>Costos de envio</h5>
+        {showBrands()}
        
         <hr />
         <p>Total: <NumberFormat value={total}  displayType="text" thousandSeparator="." decimalSeparator="," prefix="$"/></p>
@@ -269,7 +339,7 @@ const findBrands = () =>{
               <button
                 className="btn btn-primary"
                 disabled={!addressSaved || !products.length}
-                onClick={() => history.push("/payment")}
+            onClick={() => history.push(`/payment`)}
               >
                 Colocar Orden
               </button>

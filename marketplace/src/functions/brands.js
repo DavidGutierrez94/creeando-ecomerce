@@ -9,3 +9,9 @@ export const getBrandsByCount = async (count) =>
     order,
     page,
   });
+  
+
+  export const getBrand = async (id) =>
+await axios.get(`${process.env.REACT_APP_API}/brand/${id}`, {
+
+});

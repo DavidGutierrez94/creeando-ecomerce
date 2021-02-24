@@ -5,8 +5,7 @@ exports.list = async (req, res) =>
 
 exports.read = async (req, res) => {
   const {brandId} = req.body;
-  let brand = await Brand.findOne({_id: brandId}).exec();
+  let brand = await Brand.findOne({_id: req.params.brandId}).exec();
    res.json(brand);
-  
 
 };

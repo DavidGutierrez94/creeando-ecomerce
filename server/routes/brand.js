@@ -11,7 +11,7 @@ const {
 
 // routes
 router.get("/brands", list);
-router.get("/brand", read);
+router.get("/brand/:brandId", read);
 
 
 module.exports = router;

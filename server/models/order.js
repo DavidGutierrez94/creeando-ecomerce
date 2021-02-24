@@ -14,7 +14,10 @@ const orderSchema = new mongoose.Schema(
         color: String,
       },
     ],
-    paymentIntent: {},
+    paymentIntent: {
+      payment_url: String,
+      purchase_id: String,
+    },
     orderStatus: {
       type: String,
       default: "Sin Procesar",

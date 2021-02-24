@@ -3,7 +3,7 @@ import React from "react";
 const ShowPaymentInfo = ({ order, showStatus = true }) => (
   <div>
     <p>
-      <span>Order Id: {order.paymentIntent.id}</span>
+      <span>Order Id: {order.paymentIntent.purchase_id}</span>
       {" / "}
       <span>
         precio:{" / "}
@@ -13,15 +13,9 @@ const ShowPaymentInfo = ({ order, showStatus = true }) => (
         })}
       </span>
       {" / "}
-      <span>Moneda: {order.paymentIntent.currency.toUpperCase()}</span>
-      {" / "}
-      <span>Metodo: {order.paymentIntent.payment_method_types[0]}</span>
-      {" / "}
-      <span>Pago: {order.paymentIntent.status.toUpperCase()}</span>
-      {" / "}
       <span>
         Fecha:{" / "}
-        {new Date(order.paymentIntent.created * 1000).toLocaleString()}
+        {new Date(order.createdAt * 1000).toLocaleString()}
       </span>
       {" / "}
       <br />

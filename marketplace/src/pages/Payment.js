@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { currentUser } from "../functions/auth";
-import { getUserCart } from "../functions/user";
+import { createOrder, getUserCart, updateUser } from "../functions/user";
+import Modal from 'react-modal';
+import { createPaymentIntent } from "../functions/stripe";
+
 
 
 // load stripe outside of components render to avoid recreating stripe object on every render
 /* const promise = loadStripe(process.env.REACT_APP_STRIPE_KEY); */
 
-const Payment = () => {
+const Payment = ({history}) => {
 
   const dispatch = useDispatch();
   const { user, COD } = useSelector((state) => ({ ...state }));
   const [form, setForm] = useState({})
+  const [modal, setModal] = useState(false)
+  const [paymentLink, setPaymentLink] = useState("")
+  const [order, setOrder] = useState({})
 
   useEffect(() => {
     let initFetch = async () => {
@@ -19,8 +25,9 @@ const Payment = () => {
         console.log("user cart res", JSON.stringify(res.data, null, 4));
       })
       await currentUser(user.token).then((d)=>{
-        console.log(d)
-        setForm(d.data)
+        let date = new Date()
+        
+        setForm({...d.data, description: `${d.data._id} - ${date.toString()}`})
       })
     }
 
@@ -31,10 +38,33 @@ const Payment = () => {
 
 }, [])
 
+const handleSubmit = async (e) => {
+  e.preventDefault()
+  await updateUser(user.token, form)
+  await createPaymentIntent(user.token,null,form).then((res)=>{
+    setPaymentLink(res.data.payment_url)
+    createOrder(res.data, user.token)
+  })
+  setModal(true)
+
+}
+
+const handleOrder = async () => {
+  setModal(false)
+  history.push("/user/history")
+}
+
 return (
   <div className="container p-5 text-center">
+
+<Modal
+          isOpen={modal}>
+            <p>Una vez realizado el pago da click en <button onClick={handleOrder} className="btn btn-primary" >Finalizar</button></p>
+            
+            <iframe style={{height:"80%", width: "100%"}} src={paymentLink} ></iframe>
+          </Modal>
     <h4>Terminar Compra</h4>
-    <form style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }} >
+    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }} >
       <input
         className="form-control"
         style={{ width: 400 }}

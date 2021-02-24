@@ -17,12 +17,15 @@ const {
   wishlist,
   removeFromWishlist,
   createCashOrder,
+  updateUser,
 } = require("../controllers/user");
 
 router.post("/user/cart", authCheck, userCart); // save cart
 router.get("/user/cart", authCheck, getUserCart); // get cart
 router.delete("/user/cart", authCheck, emptyCart); // empty cart
 router.post("/user/address", authCheck, saveAddress);
+router.put("/user/", authCheck, updateUser);
+
 
 router.post("/user/order", authCheck, createOrder); // stripe
 router.post("/user/cash-order", authCheck, createCashOrder); // cod

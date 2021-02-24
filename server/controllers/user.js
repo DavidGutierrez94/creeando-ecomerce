@@ -83,6 +83,16 @@ exports.saveAddress = async (req, res) => {
   res.json({ ok: true });
 };
 
+exports.updateUser = async (req, res) => {
+  const userAddress = await User.findOneAndUpdate(
+    { email: req.user.email },
+    { ...req.body }
+  ).exec();
+
+  res.json({ ...req.body });
+};
+
+
 exports.applyCouponToUserCart = async (req, res) => {
   const { coupon } = req.body;
   console.log("COUPON", coupon);
@@ -123,7 +133,7 @@ exports.applyCouponToUserCart = async (req, res) => {
 exports.createOrder = async (req, res) => {
   // console.log(req.body);
   // return;
-  const { paymentIntent } = req.body.stripeResponse;
+  let paymentIntent  = req.body.stripeResponse;
 
   const user = await User.findOne({ email: req.user.email }).exec();
 
@@ -131,9 +141,11 @@ exports.createOrder = async (req, res) => {
 
   let newOrder = await new Order({
     products,
-    paymentIntent,
+    paymentIntent: paymentIntent,
     orderdBy: user._id,
   }).save();
+
+  console.log("ERROR", paymentIntent)
 
   // decrement quantity, increment sold
   let bulkOption = products.map((item) => {
@@ -154,6 +166,16 @@ exports.createOrder = async (req, res) => {
 
 exports.orders = async (req, res) => {
   let user = await User.findOne({ email: req.user.email }).exec();
+
+  let userOrders = await Order.find({ orderdBy: user._id })
+    .populate("products.product")
+    .exec();
+
+  res.json(userOrders);
+};
+
+exports.orderUpdate = async (req, res) => {
+  let user = await User.findOneAndUpdate ({ email: req.user.email }).exec();
 
   let userOrders = await Order.find({ orderdBy: user._id })
     .populate("products.product")

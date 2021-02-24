@@ -36,6 +36,17 @@ export const saveUserAddress = async (authtoken, address, ind) =>
     }
   );
 
+  export const updateUser = async (authtoken, body) =>
+  await axios.put(
+    `${process.env.REACT_APP_API}/user`,
+    { ...body},
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+
 export const applyCoupon = async (authtoken, coupon) =>
   await axios.post(
     `${process.env.REACT_APP_API}/user/cart/coupon`,

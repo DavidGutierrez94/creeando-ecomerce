@@ -290,7 +290,7 @@ const findBrands = async (addrss) =>{
         <br />
         <br />
         {showAddress()}
-        {address.length < 1?
+        {address && address.length < 1?
          <label className="text-danger">*agrega tu dirección para calcular el costo de envio.</label>
          :<br />
          }

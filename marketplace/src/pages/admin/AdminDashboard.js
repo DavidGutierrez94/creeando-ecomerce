@@ -4,6 +4,7 @@ import { getOrders, changeStatus } from "../../functions/admin";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import Orders from "../../components/order/Orders";
+import { createServiceDispatch} from "../../functions/calculate"
 
 const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
@@ -19,7 +20,15 @@ const AdminDashboard = () => {
       setOrders(res.data);
     });
 
-  const handleStatusChange = (orderId, orderStatus) => {
+  const handleStatusChange = (orderId, orderStatus, ord) => {
+
+    if(orderStatus == "Despachada"){
+      let body = {
+        products: ord, user: user,
+      }
+      createServiceDispatch()
+
+    }
     changeStatus(orderId, orderStatus, user.token).then((res) => {
       toast.success("Status updated");
       loadOrders();

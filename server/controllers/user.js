@@ -93,6 +93,7 @@ exports.updateUser = async (req, res) => {
 };
 
 
+
 exports.applyCouponToUserCart = async (req, res) => {
   const { coupon } = req.body;
   console.log("COUPON", coupon);

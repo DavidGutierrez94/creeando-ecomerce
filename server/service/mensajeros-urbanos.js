@@ -73,3 +73,50 @@ exports.calculateMU = (token, dataFront)  => new Promise((resolve, reject) => {
     }
   });
 });
+ 
+exports.dispatchOrderMU=({token, order, delivery })=>{
+
+  let nows = new Date()
+  const headers = {
+    "content-type": "application/json",
+      access_token: token,
+    }; 
+  let bodySend = {
+    "id_user": process.env.USER_ID_MU,//ID de usuario
+    "type_service": 4, //Tipo de servicio
+    "roundtrip": 0, //Ida y vuelta 1=si; 0:No
+    "declared_value": 10000, //Valor declarado
+    "city":1,//1->Bogotá 2->Cali 3->Medellín 4->Barranquilla 5-Villavicencio
+    "start_date": nows.toDateString(), //Fecha Inicio
+    "start_time": nows.toTimeString().split(" ")[0],//Hora Inicio
+    "user_payment_type":3, 
+    "type_segmentation":1,
+    "type_task_cargo_id":2,//Tipo de sevicio, 2->Normal
+     "coordinates": [
+              ... order.coordinates,
+             {"products": products}
+         
+     ]
+ }
+ 
+const options = { 
+  method: 'POST',
+  url: `${process.env.URL_MU}/Create-services`,
+  headers,
+  form: {
+        'grant_type': 'client_credentials'
+      }
+
+}
+request({...options}, (error, response, body) => {
+  if (error) {
+    console.log(error)
+    reject(error)
+  }
+  else{
+    console.log("-------------------------------")
+    resolve(JSON.parse(body))   
+  }
+});
+}
+ 

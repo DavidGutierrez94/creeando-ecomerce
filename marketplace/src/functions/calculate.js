@@ -6,3 +6,10 @@ export const calculateDeliveryBrand = async (body, authtoken) =>
       authtoken,
     },
   });
+
+  export const createServiceDispatch = async (body, authtoken) =>
+  await axios.post(`${process.env.REACT_APP_API}/dispatchMU`, body, {
+    headers: {
+      authtoken,
+    },
+  });

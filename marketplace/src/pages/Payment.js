@@ -17,12 +17,13 @@ const Payment = ({history}) => {
   const [form, setForm] = useState({})
   const [modal, setModal] = useState(false)
   const [paymentLink, setPaymentLink] = useState("")
-  const [order, setOrder] = useState({})
+  const [value, setValue] = useState({})
 
   useEffect(() => {
     let initFetch = async () => {
       await getUserCart(user.token).then((res) => {
         console.log("user cart res", JSON.stringify(res.data, null, 4));
+        setValue(res.data.cartTotal)
       })
       await currentUser(user.token).then((d)=>{
         let date = new Date()
@@ -41,7 +42,7 @@ const Payment = ({history}) => {
 const handleSubmit = async (e) => {
   e.preventDefault()
   await updateUser(user.token, form)
-  await createPaymentIntent(user.token,null,form).then((res)=>{
+  await createPaymentIntent(user.token,null,{...form, total_value: value  }).then((res)=>{
     setPaymentLink(res.data.payment_url)
     createOrder(res.data, user.token)
   })

@@ -79,11 +79,13 @@ const ProductCreate = () => {
   const handleCatagoryChange = (e) => {
     e.preventDefault();
     console.log("CLICKED CATEGORY", e.target.value);
+    setValues({...values, title: values.title.replace(/\b\w/g, function(l){ return l.toUpperCase() })})
     setValues({ ...values, subs: [], category: e.target.value });
     getCategorySubs(e.target.value).then((res) => {
       console.log("SUB OPTIONS ON CATGORY CLICK", res);
       setSubOptions(res.data);
     });
+    createProduct(values)
     setShowSub(true);
   };
 

@@ -29,7 +29,7 @@ const size = [
 { value: "XL", text: "XL" }]
 
 
-export const BrandProductCreateForm = () => {
+export const BrandProductCreateForm = ({handleSubmit, setValues, values}) => {
   const { user } = useSelector((state) => ({ ...state }));
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCat] = useState([]);
@@ -62,28 +62,14 @@ export const BrandProductCreateForm = () => {
     price: "",
     shipping: "",
     quantity: "",
-    picture: null,
     category: "",
     subcategory: "",
   };
 
-  const handleSubmit = (values) => {
-    console.log(values);
-    createProductBrand(values, user.token)
-      .then((res) => {
-        console.log(res);
-        window.alert(`"${res.data.title}" se ha creado.`);
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-        // if (err.response.status === 400) toast.error(err.response.data);
-        toast.error(err.response.data.err);
-      });
-  };
+  
 
   const schema = yup.object().shape({
-    title: yup.string().required("Campo requerido"),
+    /* title: yup.string().required("Campo requerido"),
     description: yup.string().required("Campo requerido"),
     price: yup
       .number()
@@ -93,35 +79,49 @@ export const BrandProductCreateForm = () => {
     quantity: yup
       .number()
       .min(0, "Debe ingresar una cantidad valida")
-      .required("Debe ingresar una cantidad"),
+      .required("Debe ingresar una cantidad"), */
   });
 
   return (
-    <Formik initialValues={initialVal} validationSchema={schema} onSubmit={handleSubmit}>
-      {({ setFieldValue, values }) => (
-        <Form>
-          <FormImage
-            setField={setFieldValue}
-            formName="picture"
-            label="Elegir archivo"
-          />
-          <FormInput formType="text" formName="title" label="Nombre" />
-          <FormInput
-            formType="text"
-            formName="description"
-            label="Descripción"
-          />
-          <FormInput formType="number" formName="price" label="Precio" />
-          <FormSelect
-            formName="shipping"
-            label="Envío Aliados Mensajeros Urbanos"
-            list={[{ value: 'No', text: 'No' }, { value: 'Yes', text: 'Si' }]}
-          />
+    
+        <form style={{display: "flex", flexDirection:"column"}} onSubmit={handleSubmit}>
+         
+          <input className="form-control mr-sm-2"  style={{margin: 10}}  placeholder="Nombre" label="Nombre" onChange={(e)=>setValues({...values,title:e.target.value})} />
+          <input className="form-control mr-sm-2"  style={{margin: 10}}   placeholder="Descripción" label="Nombre" onChange={(e)=>setValues({...values, description:e.target.value})} />
+          <input className="form-control mr-sm-2"  style={{margin: 10}}  placeholder="Precio" label="Nombre" onChange={(e)=>setValues({...values,price:e.target.value})} />
+          <select className="form-control mr-sm-2"  style={{margin: 10}} onChange={(e)=> setValues({...values, shipping: e.target.value})} >
+            <option >Envío Aliados Mensajeros Urbanos</option>
+            <option value="Yes" >Si</option>
+
+            <option value="No" >No</option>
+          </select>
+          <input className="form-control mr-sm-2"  style={{margin: 10}}  placeholder="Cantidad" label="Nombre" onChange={(e)=>setValues({...values,quantity:e.target.value})} />
+          
+          <select className="form-control mr-sm-2"  style={{margin: 10}} onChange={(e)=> setValues({...values, color: e.target.value})} >
+            <option >Color</option>
+            {colors.map((item,i)=> <option key={i} value={item.value} >{item.text}</option>)}
+          </select>
+          <select className="form-control mr-sm-2"  style={{margin: 10}} onChange={(e)=> setValues({...values, size: e.target.value})} >
+            <option >Talla</option>
+            {size.map((item,i)=> <option key={i} value={item.value} >{item.text}</option>)}
+          </select>
+          <select className="form-control mr-sm-2"  style={{margin: 10}} onChange={(e)=> {
+            setValues({...values, category: e.target.value})
+            getSubCats(e.target.value);
+            }} >
+            <option >Categoría</option>
+            {categories.map((item,i)=> <option key={i} value={item.value} >{item.text}</option>)}
+          </select>
+          <select className="form-control mr-sm-2"  style={{margin: 10}} onChange={(e)=> setValues({...values, subcategory: e.target.value})} >
+            <option >Sub Categorías</option>
+            {subCategories.map((item,i)=> <option key={i} value={item.value} >{item.text}</option>)}
+          </select>
+          {/*
           <FormInput formType="number" formName="quantity" label="Cantidad" />
           <FormSelect formName="color" label="Color" list={colors} />
           <FormSelect formName="size" label="Talla" list={size} />
           <div className="form-group">
-            <label htmlFor="category">Categoría</label>
+            <label htmlFor="category"></label>
             <select
               name="category"
               id="category"
@@ -147,10 +147,9 @@ export const BrandProductCreateForm = () => {
             formName="subcategory"
             label="Sub Categorías"
             list={subCategories}
-          />
+          /> */}
           <button type="submit" className="btn btn-outline-info">Guardar</button>
-        </Form>
-      )}
-    </Formik>
+        </form>
+      
   );
 };

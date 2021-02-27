@@ -1,3 +1,13 @@
+.input-pers {
+  border: 1px #f6f6f6 !important;
+  background-color: red;
+}
+
+.ant-card-bordered {
+  border: 1px solid #f0f0f0;
+  overflow: hidden;
+}
+
 .stripe-form {
   /* width: 60vw; */
   align-self: center;
@@ -134,3 +144,4 @@ button:hover {
     width: 80vw;
   }
 }
+

@@ -8,17 +8,17 @@ import LogoUpload from "../../components/forms/LogoUpload";
 
 const RegisterBrandComplete = ({ history }) => {
   const initialState = {
-    repName:"daniel",
-   email:"kebipa3139@izzum.com",
+    repName:"",
+   email:"",
     categories:[],
     subs:[],
-    repId:"1144096123",
-    phone:"3104477054",
-    brandName: "tesla",
-    description:"tesla motors",
-    address:"tesla 12 # 3-21",
+    repId:"",
+    phone:"",
+    brandName: "",
+    description:"",
+    address:"",
     logo:[],
-    token:"nWbsvnP9ZXq3qvaUqrsc",
+    token:"",
   };
   const [values, setValues] = useState(initialState);
 

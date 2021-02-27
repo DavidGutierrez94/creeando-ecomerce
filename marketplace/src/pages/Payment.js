@@ -52,6 +52,7 @@ const handleSubmit = async (e) => {
 
 const handleOrder = async () => {
   setModal(false)
+  window.localStorage.removeItem("cart")
   history.push("/user/history")
 }
 

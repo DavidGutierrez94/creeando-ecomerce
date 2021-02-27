@@ -78,16 +78,21 @@ const findBrands = async (addrss) =>{
  
   
   products.map((p)=>{
-    if(!bt.includes(p.product.brandId)){
+    
+      console.log(p)
     bt.push(p.product.brandId)
-    }
+    
   });
 
+  console.log(bt)
+
   await bt.map(async (item, i) => {
+    console.log("hola")
     
     await getBrand(item).then(async (d)=>{
+      console.log("llll")
       let dataMU ={
-        "id_user": user._id,//ID de usuario
+        "id_user": "163593",//ID de usuario
       "type_service": 4, //Tipo de servicio
       "roundtrip": 0, //Ida y vuelta 1=si; 0:No
       "city":1,//1->Bogotá 2->Cali 3->Medellín 4->Barranquilla 5-Villavicencio
@@ -112,7 +117,7 @@ const findBrands = async (addrss) =>{
     
     })
   })
-  console.log(brs)
+  console.log(ta)
   setBrs(ta)
 
 
@@ -247,7 +252,7 @@ const findBrands = async (addrss) =>{
   );
 
   const showBrands = () => brs.map((item, i) => (
-    <><p key={i}>{item.brandName} = {item.MU}</p></>
+    <p key={i}>{item.brandName} = {item.MU}</p>
   ))
 
   const createCashOrder = () => {

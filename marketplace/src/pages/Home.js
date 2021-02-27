@@ -64,23 +64,12 @@ const Home = () => {
          requestToChangeActive={value => setActiveItemIndex(value)}
          rightChevron={'>'}
          leftChevron={'<'}
+         
       >
-              {brands.map((brand) => (
-                <div style={{margin:20}}>
-                  <Card
-
-                    bordered={false}
-                    hoverable
-                    style={cardEdges}
-                    alt="example"
-                    cover={<img alt="example" src={brand.logo} style={{ height: "250px", objectFit: "cover", borderRadius: "25px 25px 0px 0px" }} />}
-                  >
-                    <Meta
-                      avatar={<Avatar src={brand.logo} />}
-                      title={brand.name}
-
-                    />
-                  </Card>
+              {brands.filter(b => b.logo && b.logo[0]).map((brand) => (
+                <div style={{margin:20, display:"flex",flexDirection:"column", alignItems:"center", justifyContent:"center"}}>
+                    <img style={{height:100, borderRadius: 8}} src={brand.logo[0].url} />
+                    {brand.brandName}
                
                   </div>
               ))

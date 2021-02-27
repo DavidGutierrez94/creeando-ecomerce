@@ -49,6 +49,7 @@ const BestSellers = () => {
           outsideChevron={true}
           showSlither={false}
           firstAndLastGutter={false}
+          numberOfCards={3}
           activeItemIndex={activeItemIndex}
           requestToChangeActive={value => setActiveItemIndex(value)}
           rightChevron={'>'}

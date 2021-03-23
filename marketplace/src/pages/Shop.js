@@ -23,10 +23,11 @@ import {
   StarTwoTone,
 } from "@ant-design/icons";
 import Star from "../components/forms/Star";
+import { useParams } from "react-router";
 
 const { SubMenu, ItemGroup } = Menu;
 
-const Shop = () => {
+const Shop = ({location}) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState([0, 0]);
@@ -78,8 +79,15 @@ const Shop = () => {
   // 1. load products by default on page load
   const loadAllProducts = () => {
     getProductsByCount(12).then((p) => {
-      setProducts(p.data);
-      setLoading(false);
+      console.log(location?.state)
+      if(location?.state?._id){
+        console.log("hola")
+        setProducts(p.data.filter((b)=>b.brandId === location?.state?._id))
+      }else{
+
+        setProducts(p.data);
+        setLoading(false);
+      }
     });
   };
 

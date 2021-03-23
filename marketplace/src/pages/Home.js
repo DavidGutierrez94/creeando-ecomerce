@@ -14,7 +14,7 @@ import { getBrands } from "../functions/brands";
 import ItemsCarousel from 'react-items-carousel';
 
 
-const Home = () => {
+const Home = ({history}) => {
   const cardEdges = {
     width: 240,
     borderRadius: 25,
@@ -66,8 +66,8 @@ const Home = () => {
          leftChevron={'<'}
          
       >
-              {brands.filter(b => b.logo && b.logo[0]).map((brand) => (
-                <div style={{margin:20, display:"flex",flexDirection:"column", alignItems:"center", justifyContent:"center"}}>
+              {brands.filter(b => b.logo && b.logo[0]).map((brand,i) => (
+                <div key={i} onClick={()=>history.push({pathname:"/shop", state: brand})} style={{margin:20, cursor:"pointer", display:"flex",flexDirection:"column", alignItems:"center", justifyContent:"center"}}>
                     <img style={{height:100, borderRadius: 8}} src={brand.logo[0].url} />
                     {brand.brandName}
                

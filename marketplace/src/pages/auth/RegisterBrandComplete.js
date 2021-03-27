@@ -44,7 +44,6 @@ const RegisterBrandComplete = ({ history }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(values)
     // validation
     if (!values.email || !password) {
       toast.error("Email y Contraseña son necesarios");

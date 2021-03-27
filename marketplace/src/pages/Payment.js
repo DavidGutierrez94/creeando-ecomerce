@@ -4,7 +4,7 @@ import { currentUser } from "../functions/auth";
 import { createOrder, getUserCart, updateUser } from "../functions/user";
 import Modal from 'react-modal';
 import { createPaymentIntent } from "../functions/stripe";
-
+import { Link, Route } from "react-router-dom";
 
 
 // load stripe outside of components render to avoid recreating stripe object on every render
@@ -46,9 +46,14 @@ const handleSubmit = async (e) => {
     setPaymentLink(res.data.payment_url)
     createOrder(res.data, user.token)
   })
+  //console.log(paymentLink||"No se obtuvo link");
+ //redirectPayment()
+
   setModal(true)
 
 }
+
+
 
 const handleOrder = async () => {
   setModal(false)
@@ -59,12 +64,11 @@ const handleOrder = async () => {
 return (
   <div className="container p-5 text-center">
 
-<Modal
+        <Modal
           isOpen={modal}>
-            <p>Una vez realizado el pago da click en <button onClick={handleOrder} className="btn btn-primary" >Finalizar</button></p>
-            
+            <p>Una vez realizado el pago da click en <button onClick={handleOrder} className="btn btn-primary" >Finalizar</button></p>  
             <iframe style={{height:"80%", width: "100%"}} src={paymentLink} ></iframe>
-          </Modal>
+        </Modal>
     <h4>Terminar Compra</h4>
     <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }} >
       <input
@@ -138,7 +142,9 @@ return (
       />
       <br/>
 
-      <button className="btn btn-primary" >Pagar</button>
+  <button className="btn btn-primary" >Pagar</button>
+
+      
 
     </form>
   </div>

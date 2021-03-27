@@ -1,4 +1,7 @@
-import React from "react";
+import React,{useState} from "react";
+import ColorPickerModal from "../modal/ColorPickerModal"
+
+
 
 const BrandCreateForm = ({
     handleSubmit,
@@ -20,6 +23,14 @@ const BrandCreateForm = ({
         token
       } = values;
 
+    
+      const [color, setColor] = useState('#fff');
+ 
+
+      const handleChangeComplete = (c) => {
+          setColor(c.hex);
+
+        };
     return(
         <form onSubmit={handleSubmit}>
         <input type="email" className="form-control" name="email" value={email} onChange={handleChange} placeholder="Email"/>
@@ -35,6 +46,8 @@ const BrandCreateForm = ({
           <option value="3" >Cali</option>
         </select>
         <input type="address" className="form-control" placeholder="Dirección" name="address" value={address} onChange={handleChange} />
+        <input type="address" className="form-control" placeholder="Dirección de despacho" name="address" value={address} onChange={handleChange} />
+
         <input
           type="text"
           className="form-control"
@@ -44,7 +57,10 @@ const BrandCreateForm = ({
           placeholder="Token de acceso de tu marca"
           autoFocus
         />
-    
+        <placeholder> Color Primario: {color} </placeholder>
+        {ColorPickerModal(color,handleChangeComplete)}
+
+      
         <input
           type="password"
           name="password"

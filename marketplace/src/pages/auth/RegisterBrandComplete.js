@@ -8,22 +8,22 @@ import LogoUpload from "../../components/forms/LogoUpload";
 
 const RegisterBrandComplete = ({ history }) => {
   const initialState = {
-    repName:"",
-   email:"",
+    repName:"asd",
+   email:"10test@gmail.com",
     categories:[],
     subs:[],
-    repId:"",
-    phone:"",
-    brandName: "",
-    description:"",
-    address:"",
+    repId:"123456789",
+    phone:"12345678",
+    brandName: "10test",
+    description:"awdawd awdawdaw awdadw  awdawd",
+    address:"calle 21 # 3-1",
     logo:[],
-    token:"",
+    token:"2qa67QwvqHfJWnNVDBLY",
   };
   const [values, setValues] = useState(initialState);
 
   const [loading, setLoading] = useState(false);
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("123123");
 
 
 
@@ -44,7 +44,7 @@ const RegisterBrandComplete = ({ history }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
+    console.log(values)
     // validation
     if (!values.email || !password) {
       toast.error("Email y Contraseña son necesarios");

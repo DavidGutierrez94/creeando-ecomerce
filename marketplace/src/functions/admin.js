@@ -14,10 +14,10 @@ export const getOrdersBrand = async (authtoken) =>
     },
   });
 
-export const changeStatus = async (orderId, orderStatus, authtoken) =>
+export const changeStatus = async (orderId,user, orderStatus, authtoken) =>
   await axios.put(
     `${process.env.REACT_APP_API}/admin/order-status`,
-    { orderId, orderStatus },
+    { orderId, orderStatus, user },
     {
       headers: {
         authtoken,

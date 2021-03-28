@@ -43,7 +43,7 @@ const handleSubmit = async (e) => {
   e.preventDefault()
   await updateUser(user.token, form)
   await createPaymentIntent(user.token,null,{...form, total_value: value  }).then((res)=>{
-    setPaymentLink(res.data.payment_url)
+    window.open(res.data.payment_url)
     createOrder(res.data, user.token)
   })
   //console.log(paymentLink||"No se obtuvo link");
@@ -66,8 +66,8 @@ return (
 
         <Modal
           isOpen={modal}>
-            <p>Una vez realizado el pago da click en <button onClick={handleOrder} className="btn btn-primary" >Finalizar</button></p>  
-            <iframe style={{height:"80%", width: "100%"}} src={paymentLink} ></iframe>
+            <p>Una vez realizado el pago da click en </p>
+            <button onClick={handleOrder} className="btn btn-primary" >Finalizar</button>  
         </Modal>
     <h4>Terminar Compra</h4>
     <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }} >

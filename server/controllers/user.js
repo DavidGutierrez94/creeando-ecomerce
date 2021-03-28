@@ -4,6 +4,7 @@ const Cart = require("../models/cart");
 const Coupon = require("../models/coupon");
 const Order = require("../models/order");
 const uniqueid = require("uniqueid");
+const nodemailer = require('nodemailer');
 
 exports.userCart = async (req, res) => {
   // console.log(req.body); // {cart: []}
@@ -161,6 +162,22 @@ exports.createOrder = async (req, res) => {
   let updated = await Product.bulkWrite(bulkOption, {});
   console.log("PRODUCT QUANTITY-- AND SOLD++", updated);
 
+  let mailTransporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_TP,
+        pass: process.env.PASSWORD_TP
+    }
+});
+  
+let mailDetails = {
+    from: process.env.EMAIL_TP,
+    to: req.user.email,
+    subject: 'Se ha creado una orden',
+    text: `Se ha creado una orden ${newOrder}`
+};
+
+mailTransporter.sendMail(mailDetails)
   console.log("NEW ORDER SAVED", newOrder);
   res.json({ ok: true });
 };

@@ -36,6 +36,7 @@ exports.createOrUpdateBrand = async (req, res) => {
     address,
     logo,
     token,
+    city,
   } = req.body;
   const searchUser= {
     name: email.split("@")[0]
@@ -86,6 +87,7 @@ exports.createOrUpdateBrand = async (req, res) => {
       address,
       logo,
       token,
+      city
     }).save();
     console.log("BRAND CREATED", newBrand);
     res.json(newBrand);

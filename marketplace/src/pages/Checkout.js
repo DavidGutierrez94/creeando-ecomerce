@@ -65,8 +65,7 @@ const Checkout = ({history}) => {
                     setInd(d.data.ind)
                 })
             });
-        } 
-        
+        };
         initFetch()
 
 
@@ -92,26 +91,38 @@ const Checkout = ({history}) => {
 
             await getBrand(item).then(async (d) => {
 
-                
+                let nameCity = ""
+                switch (userCity) {
+                    case "1": nameCity = "bogota"
+                        break;
+                    case "1": nameCity = "bogota"
+                        break;
+                    case "1": nameCity = "bogota"
+                        break;
+                    default:
+                        break;
+                }
+
+
                 currentUser(user.token).then(async (da) => {
                     if (da.data.city === d.data.city) {
-                      let dataMU = {
-                        "id_user": "163593", // ID de usuario
-                        "type_service": 4, // Tipo de servicio
-                        "roundtrip": 0, // Ida y vuelta 1=si; 0:No
-                        "city": 1, // 1->Bogotá 2->Cali 3->Medellín 4->Barranquilla 5-Villavicencio
-                        "coordinates": [
-                            {
-                                "type": "0",
-                                "address": d.data.address,
-                                "city": "bogota"
-                            }, {
-                                "type": "1",
-                                "address": addrss,
-                                "city": "bogota"
-                            },
-                        ]
-                    }
+                        let dataMU = {
+                            "id_user": "163593", // ID de usuario
+                            "type_service": 4, // Tipo de servicio
+                            "roundtrip": 0, // Ida y vuelta 1=si; 0:No
+                            "city": userCity, // 1->Bogotá 2->Cali 3->Medellín 4->Barranquilla 5-Villavicencio
+                            "coordinates": [
+                                {
+                                    "type": "0",
+                                    "address": d.data.address,
+                                    "city": nameCity
+                                }, {
+                                    "type": "1",
+                                    "address": addrss,
+                                    "city": nameCity
+                                },
+                            ]
+                        }
                         await calculateDeliveryBrand(dataMU).then((mu) => {
 
                             ta.push({
@@ -120,9 +131,7 @@ const Checkout = ({history}) => {
                             })
                             setTotal(total + mu.data.data.total_service)
                         })
-                    }
-                    else{
-                      //TODO INTEGRACION COORDINADORA
+                    } else { // TODO INTEGRACION COORDINADORA
                     }
 
                 })
@@ -281,6 +290,7 @@ const Checkout = ({history}) => {
                 if (typeof window !== "undefined") 
                     localStorage.removeItem("cart");
                 
+
                 // empty redux cart
                 dispatch({type: "ADD_TO_CART", payload: []});
                 // empty redux coupon
@@ -311,8 +321,8 @@ const Checkout = ({history}) => {
                     className="form-control">
                     <option>Selecciona una ciudad</option>
                     <option value="1">Bogota</option>
-                    <option value="2">medellin</option>
-                    <option value="3">Cali</option>
+                    <option value="3">medellin</option>
+                    <option value="2">Cali</option>
                 </select>
                 {
                 showAddress()

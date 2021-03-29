@@ -43,8 +43,8 @@ const BrandCreateForm = ({
         <select name="city" className="form-control" onChange={handleChange} >
           <option >Selecciona una ciudad</option>
           <option value="1" >Bogota</option>
-          <option value="2" >Medellin</option>
-          <option value="3" >Cali</option>
+          <option value="3" >Medellin</option>
+          <option value="2" >Cali</option>
         </select>
         <input type="address" className="form-control" placeholder="Dirección" name="address" value={address} onChange={handleChange} />
         <input type="address" className="form-control" placeholder="Dirección de despacho" name="address" value={address} onChange={handleChange} />

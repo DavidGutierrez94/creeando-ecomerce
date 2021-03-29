@@ -56,7 +56,8 @@ exports.createOrUpdateBrand = async (req, res) => {
         address,
         logo,
         token,
-        city
+        city,
+        color
     } = req.body;
     const searchUser = {
         name: email.split("@")[0]
@@ -88,11 +89,16 @@ exports.createOrUpdateBrand = async (req, res) => {
             to: req.user.email,
             subject: 'Gracias por registrarte',
             text: `Gracias ${
-                reque.user.name
+                req.user.name
             } por registrarte en el marketplace de Cree-Ando. En Cree-Ando queremos apoyar a todos los emprendedores colombianos y ahora tú haces parte de nuestro ecosistema.`
         };
+        try{
 
-        mailTransporter.sendMail(mailDetails)
+            mailTransporter.sendMail(mailDetails)
+        }
+        catch(e){
+            console.log(process.env.EMAIL_TP)
+        }
         console.log("USER CREATED", newUser);
     }
     const searchBrand = {
@@ -120,7 +126,8 @@ exports.createOrUpdateBrand = async (req, res) => {
             address,
             logo,
             token,
-            city
+            city,
+            color
         }).save();
         console.log("BRAND CREATED", newBrand);
         res.json(newBrand);

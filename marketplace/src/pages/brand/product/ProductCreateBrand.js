@@ -20,7 +20,7 @@ const initialState = {
   category: "",
   subs: [],
   shipping: "",
-  quantity: "",
+  quantity: [],
   images: [
     // {
     //   public_id: "jwrzeubemmypod99e8lz",
@@ -130,6 +130,8 @@ export const ProductCreateBrand = () => {
             values={values}
             handleCatagoryChange={handleCatagoryChange}
             subOptions={subOptions}
+            handleInv={(e)=>setValues({...values, quantity: e})}
+            inv={values.quantity}
             showSub={showSub}
           />
         </div>

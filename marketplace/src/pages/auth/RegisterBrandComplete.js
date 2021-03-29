@@ -136,6 +136,7 @@ return (
         <BrandCreateForm
               handleSubmit={handleSubmit}
               handleChange={handleChange}
+              handleColor={(e)=>setValues({...values,color: e})}
               values={values}
               password={password}
               setPassword={setPassword}

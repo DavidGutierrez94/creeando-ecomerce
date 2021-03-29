@@ -42,7 +42,13 @@ const productSchema = new mongoose.Schema(
         ref: "Sub",
       },
     ],
-    quantity: Number,
+    quantity: [
+      {
+        color: String,
+        size: String,
+        num: Number
+      }
+    ],
     sold: {
       type: Number,
       default: 0,

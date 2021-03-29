@@ -20,7 +20,7 @@ const { TabPane } = Tabs;
 // this is childrend component of Product page
 const SingleProduct = ({ product, onStarClick, star }) => {
   const [tooltip, setTooltip] = useState("Click to add");
-
+  const [available, setAvailable] = useState(0)
   // redux
   const { user, cart } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
@@ -105,10 +105,10 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         <Card
           actions={[
             <Tooltip placement="top" title={tooltip}>
-              <a onClick={handleAddToCart} disabled={product.quantity < 1}>
+              <a onClick={handleAddToCart} disabled={ available < 1}>
                 <ShoppingCartOutlined className="text-danger" />
                 <br />
-                {product.quantity < 1 ? "Agotado" : "Añadir al carrito"}
+                {available < 1 ? "Agotado" : "Añadir al carrito"}
               </a>
             </Tooltip>,
             <a onClick={handleAddToWishlist}>
@@ -126,7 +126,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
             </RatingModal>,
           ]}
         >
-          <ProductListItems product={product} />
+          <ProductListItems product={product} available={(e)=>setAvailable(e)} />
         </Card>
       </div>
     </>

@@ -16,10 +16,17 @@ const ProductListItems = ({ product, available }) => {
   } = product;
 
   const [state, setState] = useState()
-  const [qua, setQua] = useState(0)
+  const [qua, setQua] = useState(product?.quantity[0]?.num)
+
+  useEffect(()=>{
+    setState({
+      color: product?.quantity[0]?.color,
+      size: product?.quantity[0]?.size
+    })
+    setQua(product?.quantity[0]?.num)
+  },[product])
 
   
-  console.log(quantity)
 
   return (
     <ul className="list-group">
@@ -72,6 +79,7 @@ const ProductListItems = ({ product, available }) => {
                     style={
                         {margin: 10}
                     }
+                    value={state?.color}
                     onChange={(e)=>setState({...state, color: e.target.value})}
                    >
                     <option>Selecciona un color</option>
@@ -83,7 +91,9 @@ const ProductListItems = ({ product, available }) => {
                     <option value="Negro">Negro</option>
 
                 </select>
-                <select className="form-control mr-sm-2"
+                <select 
+                value={state?.size} 
+                className="form-control mr-sm-2"
                     style={
                         {margin: 10}
                     }

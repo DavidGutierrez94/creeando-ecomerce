@@ -24,6 +24,7 @@ const ProductListItems = ({ product, available }) => {
       size: product?.quantity[0]?.size
     })
     setQua(product?.quantity[0]?.num)
+    console.log("hola")
   },[product])
 
   
@@ -111,12 +112,14 @@ const ProductListItems = ({ product, available }) => {
                 <button type="button"
                     onClick={
                         () => {
+                          let tv = 0
                           quantity.map((item, i)=>{
                             if(item.color === state.color && item.size === state.size){
-                              setQua(item.num)
-                              available(item.num)
+                              tv = item.num
                             }
                           })
+                          setQua(tv)
+                          available(tv)
                         }
                     }
                     className="btn btn-outline-info">Seleccionar</button>

@@ -167,7 +167,7 @@ export const BrandProductCreateForm = ({handleSubmit, setValues, values, inv, ha
                         shipping: e.target.value
                     })
             }>
-                <option>Envío Aliados Mensajeros Urbanos</option>
+                <option>Envío Aliados Mensajeros Urbanos y Coordinadora</option>
                 <option value="Yes">Si</option>
 
                 <option value="No">No</option>

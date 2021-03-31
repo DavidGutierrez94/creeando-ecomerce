@@ -65,6 +65,7 @@ const brandSchema = new mongoose.Schema(
       type: String,
       default: "brand",
     },
+    color: String,
     token:{
       type:String,
       enum: [

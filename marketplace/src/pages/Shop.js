@@ -79,9 +79,7 @@ const Shop = ({location}) => {
   // 1. load products by default on page load
   const loadAllProducts = () => {
     getProductsByCount(12).then((p) => {
-      console.log(location?.state)
       if(location?.state?._id){
-        console.log("hola")
         setProducts(p.data.filter((b)=>b.brandId === location?.state?._id))
       }else{
 

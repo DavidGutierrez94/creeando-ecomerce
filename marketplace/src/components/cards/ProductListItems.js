@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import NumberFormat from "react-number-format";
+import { useEffect } from "react";
 
-const ProductListItems = ({ product }) => {
+const ProductListItems = ({ product, available }) => {
   const {
     price,
     category,
@@ -13,6 +14,20 @@ const ProductListItems = ({ product }) => {
     quantity,
     sold,
   } = product;
+
+  const [state, setState] = useState()
+  const [qua, setQua] = useState(product?.quantity[0]?.num)
+
+  useEffect(()=>{
+    setState({
+      color: product?.quantity[0]?.color,
+      size: product?.quantity[0]?.size
+    })
+    setQua(product?.quantity[0]?.num)
+    console.log("hola")
+  },[product])
+
+  
 
   return (
     <ul className="list-group">
@@ -57,27 +72,64 @@ const ProductListItems = ({ product }) => {
         </span>
       </li>
 
-      <li className="list-group-item">
-        Color{" "}
-        <span className="label label-default label-pill pull-xs-right">
-          {color}
-        </span>
-      </li>
+      
+      <div style={
+                {display: "flex"}
+            }>
+                <select className="form-control mr-sm-2"
+                    style={
+                        {margin: 10}
+                    }
+                    value={state?.color}
+                    onChange={(e)=>setState({...state, color: e.target.value})}
+                   >
+                    <option>Selecciona un color</option>
+                    <option value="Rojo">Rojo</option>
+                    <option value="Azul">Azul</option>
+                    <option value="Verde">Verde</option>
+                    <option value="Amarillo">Amarillo</option>
+                    <option value="Blanco">Blanco</option>
+                    <option value="Negro">Negro</option>
 
-      <li className="list-group-item">
-        Talla{" "}
-        <span className="label label-default label-pill pull-xs-right">
-          {size}
-        </span>
-      </li>
+                </select>
+                <select 
+                value={state?.size} 
+                className="form-control mr-sm-2"
+                    style={
+                        {margin: 10}
+                    }
+                    onChange={(e)=>setState({...state, size: e.target.value})}
+                    >
+                    <option>Selecciona una talla</option>
+                    <option value="Única">Única</option>
+                    <option value="XS">XS</option>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
 
-      <li className="list-group-item">
+                </select>
+                <button type="button"
+                    onClick={
+                        () => {
+                          let tv = 0
+                          quantity.map((item, i)=>{
+                            if(item.color === state.color && item.size === state.size){
+                              tv = item.num
+                            }
+                          })
+                          setQua(tv)
+                          available(tv)
+                        }
+                    }
+                    className="btn btn-outline-info">Seleccionar</button>
+            </div>
+            <li className="list-group-item">
         Disponible{" "}
         <span className="label label-default label-pill pull-xs-right">
-          {quantity}
+          {qua && qua > 0 ? qua : "No hay productos disponibles"}
         </span>
       </li>
-
       <li className="list-group-item">
         Vendido{" "}
         <span className="label label-default label-pill pull-xs-right">

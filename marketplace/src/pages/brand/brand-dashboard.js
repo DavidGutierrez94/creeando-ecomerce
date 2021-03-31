@@ -49,7 +49,7 @@ export const BrandDashboard = () => {
       createServiceDispatch()
 
     }
-    changeStatus(orderId, orderStatus, user.token).then((res) => {
+    changeStatus(orderId,user, orderStatus, user.token).then((res) => {
       toast.success("Status updated");
       loadOrders();
     });

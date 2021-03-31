@@ -6,7 +6,7 @@ import { getRelated } from "../functions/product";
 import ProductCard from "../components/cards/ProductCard";
 
 const Product = ({ match }) => {
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState({quantity: []});
   const [related, setRelated] = useState([]);
   const [star, setStar] = useState(0);
   // redux
@@ -27,9 +27,9 @@ const Product = ({ match }) => {
     }
   });
 
-  const loadSingleProduct = () => {
-    getProduct(slug).then((res) => {
-      setProduct(res.data);
+  const loadSingleProduct = async() => {
+    await getProduct(slug).then(async (res) => {
+      await setProduct(res.data);
       // load related
       getRelated(res.data._id).then((res) => setRelated(res.data));
     });
@@ -39,7 +39,6 @@ const Product = ({ match }) => {
     setStar(newRating);
     console.table(newRating, name);
     productStar(name, newRating, user.token).then((res) => {
-      console.log("rating clicked", res.data);
       loadSingleProduct(); // if you want to show updated rating in real time
     });
   };

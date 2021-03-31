@@ -8,7 +8,8 @@ const BrandCreateForm = ({
     handleChange,
     values,
     password,
-    setPassword
+    setPassword,
+    handleColor
     }
 ) =>{
 
@@ -29,7 +30,7 @@ const BrandCreateForm = ({
 
       const handleChangeComplete = (c) => {
           setColor(c.hex);
-
+          handleColor(c.hex)
         };
     return(
         <form onSubmit={handleSubmit}>

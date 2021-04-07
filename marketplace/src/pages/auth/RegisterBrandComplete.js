@@ -8,18 +8,19 @@ import LogoUpload from "../../components/forms/LogoUpload";
 
 const RegisterBrandComplete = ({ history }) => {
   const initialState = {
-    repName:"asd",
-   email:"10test@gmail.com",
+    repName:"",
+    email:"",
     categories:[],
     subs:[],
-    repId:"123456789",
-    phone:"12345678",
-    brandName: "10test",
-    description:"awdawd awdawdaw awdadw  awdawd",
-    address:"calle 21 # 3-1",
+    repId:"",
+    phone:"",
+    brandName: "",
+    description:"",
+    address:"",
     logo:[],
-    token:"2qa67QwvqHfJWnNVDBLY",
+    token:"",
   };
+  // token 2qa67QwvqHfJWnNVDBLY<
   const [values, setValues] = useState(initialState);
 
   const [loading, setLoading] = useState(false);

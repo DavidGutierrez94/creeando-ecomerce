@@ -9,8 +9,8 @@ const ProductListItems = ({ product, available }) => {
     category,
     subs,
     shipping,
-    color,
-    size,
+    //color,
+    //size,
     quantity,
     sold,
   } = product;
@@ -113,7 +113,7 @@ const ProductListItems = ({ product, available }) => {
                     onClick={
                         () => {
                           let tv = 0
-                          quantity.map((item, i)=>{
+                          quantity.map((item, i) => {
                             if(item.color === state.color && item.size === state.size){
                               tv = item.num
                             }

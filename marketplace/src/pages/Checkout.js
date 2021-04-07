@@ -8,12 +8,11 @@ import {
     applyCoupon,
     createCashOrderForUser
 } from "../functions/user";
-import axios from 'axios';
 import NumberFormat from "react-number-format";
-import {add} from "lodash";
-import {getBrandsByCount, getBrand} from "../functions/brands";
+//import {add} from "lodash";
+import {/* getBrandsByCount, */ getBrand} from "../functions/brands";
 import {calculateDeliveryBrand} from "../functions/calculate";
-import {setIn} from "formik";
+//import {setIn} from "formik";
 import {currentUser} from "../functions/auth";
 
 
@@ -26,10 +25,10 @@ const Checkout = ({history}) => {
     // addressFinish: "calle 19b#6b",
     // roundtrip: 0,
     // };
-    const [loading, setLoading] = useState(false);
-    const [shipping, setShipping] = useState(0);
+    //const [loading, setLoading] = useState(false);
+    //const [shipping, setShipping] = useState(0);
     const [products, setProducts] = useState([]);
-    const [brand, setBrand] = useState("");
+    //const [brand, setBrand] = useState("");
     const [brs, setBrs] = useState([]);
 
     const [total, setTotal] = useState(0);
@@ -354,11 +353,11 @@ const Checkout = ({history}) => {
                 <hr/>
 
 
-                <h5>Costos de envio</h5>
+                <h5>Costos de envio: </h5>
                 {
                 showBrands()
             }
-
+                <p>Envios se realizan con mensajeros urbanos y corredora.</p>
                 <hr/>
                 <p>Total:
                     <NumberFormat value={total}

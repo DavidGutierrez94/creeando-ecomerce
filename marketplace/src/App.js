@@ -72,9 +72,9 @@ const App = () => {
       }
     });
     // cleanup
-    return () => unsubscribe();
+    return () => unsubscribe(); 
   }, [dispatch]);
-
+  console.log(process.env);
   return (
     <>
       <Header />

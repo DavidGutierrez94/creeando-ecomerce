@@ -12,18 +12,18 @@ import {
   BgColorsOutlined,
   ColumnWidthOutlined,
   DollarCircleTwoTone,
-  DollarOutlined,
-  DownSquareOutlined,
-  EnvironmentFilled,
-  EnvironmentOutlined,
+  //DollarOutlined,
+  //DownSquareOutlined,
+  //EnvironmentFilled,
+  //EnvironmentOutlined,
   EnvironmentTwoTone,
   FunnelPlotOutlined,
   OrderedListOutlined,
-  StarOutlined,
+  //StarOutlined,
   StarTwoTone,
 } from "@ant-design/icons";
 import Star from "../components/forms/Star";
-import { useParams } from "react-router";
+//import { useParams } from "react-router";
 
 const { SubMenu, ItemGroup } = Menu;
 

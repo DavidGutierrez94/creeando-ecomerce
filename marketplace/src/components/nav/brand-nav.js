@@ -20,11 +20,11 @@ export const BrandNav = () => {
         </Link>
       </li>
 
-      <li className="nav-item" disabled>
+{/*       <li className="nav-item" disabled>
         <Link  className="nav-link">
           Lista de deseos
         </Link>
-      </li>
+      </li> */}
       </ul>
     </nav>
   );
